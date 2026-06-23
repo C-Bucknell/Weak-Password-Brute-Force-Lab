@@ -99,6 +99,7 @@ namespace BruteForceClient
         // attempt to the site and shows the response.
         static async Task DoLogin()
         {
+            Console.WriteLine("(Tip: try the demo account from your worksheet to see a successful login.)");
             Console.Write("Enter username: ");
             string username = Console.ReadLine();
             Console.Write("Enter password: ");
