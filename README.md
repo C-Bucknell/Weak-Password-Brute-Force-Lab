@@ -17,8 +17,8 @@ BruteForceLab.sln
 ├── BruteForceClient/     console app the student MODIFIES (the attacker)
 │   └── Program.cs        the starter
 └── docs/
-    ├── Student-Worksheet.docx     hand this to students
-    └── Teacher-Answer-Key.docx    model answers + marking rubric (teacher only)
+    ├── Student-Worksheet-Weak-Passwords-and-Brute-force-attacks.docx     hand this to students
+    └── Teacher-Notes-&-Answer-Guide.docx    model answers + teacher notes (teacher only)
 ```
 
 `TargetWebsite` is insecure on purpose: `/validate` accepts credentials over
