@@ -5,12 +5,13 @@
 //  running (start it with Ctrl+F5 so it stays up). It serves on
 //  http://localhost:5000
 //
-//  This starter does ONE thing: it shows you how to send a web request
-//  from C# and read what comes back. That is the only building block you
-//  need. Turning it into a brute-force attack is YOUR task.
+//  This starter gives you ONE building block: a method that sends a
+//  single username + password attempt to the site and prints what comes
+//  back. Turning that into a brute-force attack is YOUR task.
 // =====================================================================
 
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -21,50 +22,67 @@ namespace BruteForceClient
         // The target runs on this address (set in TargetWebsite's launch settings).
         static string baseUrl = "http://localhost:5000";
 
+        // Re-use one HttpClient for every request (the recommended way in .NET).
+        static readonly HttpClient client = new HttpClient();
+
         static async Task Main()
         {
-            using HttpClient client = new HttpClient();
+            Console.WriteLine("Brute force lab - student starter");
+            Console.WriteLine("Target: " + baseUrl);
+            Console.WriteLine();
 
+            // --- Building block ------------------------------------------------
+            // Send ONE login attempt so you can see how it works. Start with an
+            // obviously-wrong guess and look carefully at what comes back - that
+            // tells you what a FAILED attempt looks like. (The real password is a
+            // number, so "wrong" is guaranteed to fail.)
+            await SendLoginAttempt("bob", "wrong");
+
+            // === YOUR TASK =====================================================
+            //  The password for user "bob" is a whole number between 1 and 99.
+            //  Using SendLoginAttempt as your building block, work out:
+            //    1. how to call it with each possible password in turn
+            //    2. how to tell, in code, whether an attempt succeeded
+            //       (hint: compare what comes back with what you saw above)
+            //    3. how to stop and report the password once you find it
+            //
+            //  Write your code below.
+            // ===================================================================
+
+            Console.WriteLine("\nPress Enter to close...");
+            Console.ReadLine();
+        }
+
+        // Sends a single username/password attempt to the site and prints the
+        // response. This is the building block for your task.
+        static async Task SendLoginAttempt(string username, string password)
+        {
             try
             {
-                // --- Building block: fetch a page and read the response ---
-                HttpResponseMessage response = await client.GetAsync(baseUrl + "/");
+                var formData = new FormUrlEncodedContent(new[]
+                {
+                    new KeyValuePair<string, string>("username", username),
+                    new KeyValuePair<string, string>("password", password)
+                });
+
+                HttpResponseMessage response =
+                    await client.PostAsync($"{baseUrl}/validate", formData);
+
                 string body = await response.Content.ReadAsStringAsync();
 
-                Console.WriteLine("Connected to: " + baseUrl);
-                Console.WriteLine("Status code : " + (int)response.StatusCode);
-                Console.WriteLine("Final URL   : " + response.RequestMessage?.RequestUri);
-                Console.WriteLine("Body length : " + body.Length + " characters");
-                Console.WriteLine();
-                Console.WriteLine("First 200 characters of the page:");
-                Console.WriteLine(body.Substring(0, Math.Min(200, body.Length)));
+                Console.WriteLine($"Sent       : username={username}, password={password}");
+                Console.WriteLine($"Status code: {(int)response.StatusCode}");
+                Console.WriteLine($"Ended up at: {response.RequestMessage?.RequestUri}");
+                Console.WriteLine("---- page returned ----");
+                Console.WriteLine(body);
+                Console.WriteLine("-----------------------");
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Could not reach the target at " + baseUrl);
-                Console.WriteLine("Is the TargetWebsite project running? Start it first with Ctrl+F5.");
+                Console.WriteLine("Is the TargetWebsite project running? Start it with Ctrl+F5.");
                 Console.WriteLine("Details: " + ex.Message);
             }
-
-            // =============================================================
-            //  YOUR TASK
-            // =============================================================
-            //  /validate takes a username and a password and decides whether
-            //  the login worked. The password for user "bob" is known to be
-            //  a number between 1 and 99.
-            //
-            //  Using only the request building block above, work out:
-            //    1. how to send a username and a password guess to /validate
-            //    2. how to tell from the response whether a guess was right
-            //    3. how to keep trying until you find the correct one
-            //
-            //  Write that logic yourself below, print the password when you
-            //  find it, and stop.
-            // =============================================================
-
-            Console.WriteLine();
-            Console.WriteLine("Press Enter to close...");
-            Console.ReadLine();
         }
     }
 }
