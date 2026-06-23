@@ -90,5 +90,4 @@ Brute-forcing a login is only lawful on a system you own or have clear
 permission to test — like this practice site running on a student's own laptop.
 Doing it to any other site, account or system without permission is a serious
 criminal offence in Australia (Criminal Code Act 1995 (Cth), Part 10.7; Crimes
-Act 1958 (Vic), s 247G). The worksheet covers this for students. Verify exact
-section numbers and penalties on austlii.edu.au before distributing.
+Act 1958 (Vic), s 247G). The worksheet covers this for students.
