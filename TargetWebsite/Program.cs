@@ -29,11 +29,16 @@ app.MapMethods("/validate", new[] { "GET", "POST" }, async (HttpContext ctx) =>
         password = form["password"];
     }
 
-    // Known logins.
-    // For the class task, bob's password is "a number between 1 and 99".
-    // Change the number below before the lesson if you like.
-    bool ok = (username == "username" && password == "p@ssw0rd")
-           || (username == "bob" && password == "42");
+    // --- Demo account --------------------------------------------------
+    // GIVE these credentials to students (they are in the worksheet) so they
+    // can see what a successful login looks like, and what a failed one looks
+    // like when the password is wrong.
+    //
+    // --- Target account ------------------------------------------------
+    // This is the account students must CRACK. bob's password is a whole
+    // number between 1 and 99 - change it before the lesson if you like.
+    bool ok = (username == "demo" && password == "letmein")
+           || (username == "bob"  && password == "42");
 
     ctx.Response.Redirect(ok ? "/admin.html" : "/login.html");
 });
