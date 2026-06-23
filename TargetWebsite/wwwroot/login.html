@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login failed — try again</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="login.css">
+  </head>
+  <body>
+    <main>
+      <form class="login-box" action="/validate" method="post">
+        <h1>Login</h1>
+
+        <p class="error-note">Wrong username or password. Try again.</p>
+
+        <div class="textbox">
+          <label for="username" class="visually-hidden">Username</label>
+          <i class="fa fa-user" aria-hidden="true"></i>
+          <input type="text" id="username" name="username"
+                 placeholder="Username" autocomplete="username">
+        </div>
+
+        <div class="textbox">
+          <label for="password" class="visually-hidden">Password</label>
+          <i class="fa fa-lock" aria-hidden="true"></i>
+          <input type="password" id="password" name="password"
+                 placeholder="Password" autocomplete="current-password">
+        </div>
+
+        <button class="button" type="submit" name="login">Sign in</button>
+      </form>
+    </main>
+  </body>
+</html>
